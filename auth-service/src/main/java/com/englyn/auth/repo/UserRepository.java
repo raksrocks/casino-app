@@ -7,5 +7,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     // Custom method to find a user by username
     UserEntity findByUsername(String username);
+
+    UserEntity findByToken(String token);
 }
 

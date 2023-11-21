@@ -9,3 +9,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+provider1:
+  url: http://ec2-18-130-236-146.eu-west-2.compute.amazonaws.com:8081/provider1/gamelaunch
+  privateKeyPath: /resources/provider1key.pem
+
+provider2:
+  url: http://ec2-18-130-236-146.eu-west-2.compute.amazonaws.com:8081/provider2/gamelaunch
+  username: apiuser
+  password: apipassword
