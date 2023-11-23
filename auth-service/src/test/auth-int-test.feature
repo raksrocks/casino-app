@@ -10,4 +10,5 @@ Feature: Creates an auth request with /login endpoint
     Examples:
 
       | username | password  | token |
-      | demo1    | password1 | "66d488ba-cf4a-11ed-afa1-0242ac120002" |
+      | demo1    | password1 | 66d488ba-cf4a-11ed-afa1-0242ac120002|       
+      
