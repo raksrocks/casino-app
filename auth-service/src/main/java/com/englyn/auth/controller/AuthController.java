@@ -1,6 +1,5 @@
 package com.englyn.auth.controller;
 
-import com.englyn.auth.exception.AuthenticationFailedException;
 import com.englyn.auth.model.AuthenticationResponse;
 import com.englyn.auth.model.Credentials;
 import com.englyn.auth.model.GameLaunchRequest;
@@ -24,14 +23,14 @@ public class AuthController {
     private GameLaunchService gameLaunchService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody Credentials credentials) {
+    public ResponseEntity<?> login(@RequestBody Credentials credentials) {
         // Authenticate user and generate token
         try{
-            String token = userService.getUserToken(credentials.getUsername());
+            String token = userService.getUserToken(credentials.getUser());
             return new ResponseEntity<>(new AuthenticationResponse(token), HttpStatus.OK);
-        } catch (AuthenticationFailedException afe){
+        } catch (Exception afe){
             afe.printStackTrace();
-            return new ResponseEntity<>(new AuthenticationResponse(null), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
     }
 
