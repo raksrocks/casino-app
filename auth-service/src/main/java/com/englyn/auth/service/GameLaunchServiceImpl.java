@@ -6,10 +6,6 @@ import com.englyn.auth.repo.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.apache.http.HttpHeaders;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.stereotype.Service;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
@@ -52,6 +43,7 @@ public class GameLaunchServiceImpl implements GameLaunchService {
     @Value("${provider2.password}")
     private String provider2Password;
 
+    @Autowired
     private final UserRepository userRepository;  // Assuming you have a UserRepository
 
     @Autowired
@@ -68,12 +60,12 @@ public class GameLaunchServiceImpl implements GameLaunchService {
         GameResponse gameProviderUrl = new GameResponse();
         try {
             // Make a call to the simulated casino game provider API
-            if ("superspins".equals(request.getGameId())) {
+            if ("superspins".equals(request.getGameid())) {
                 // Call provider 1
                 gameProviderUrl.setUrl(callProvider1(request));
                 gameProviderUrl.setMessage("Game URL retrieved successfully");
                 gameProviderUrl.setStatus("OK");
-            } else if ("jackpotslots".equals(request.getGameId())) {
+            } else if ("jackpotslots".equals(request.getGameid())) {
                 // Call provider 2
                 gameProviderUrl.setUrl(callProvider2(request));
                 gameProviderUrl.setMessage("Game URL retrieved successfully");
@@ -96,17 +88,17 @@ public class GameLaunchServiceImpl implements GameLaunchService {
 
     private String callProvider1(GameLaunchRequest request) {
         // Prepare and send request to provider 1
-        String signature = calculateSHA1Signature(request.getToken() + "|" + request.getGameId());
+        String signature = calculateSHA1Signature(request.getToken() + "|" + request.getGameid());
 
         // Prepare the JSON payload
-        String jsonPayload = createProvider1Payload(signature, request.getToken(), request.getGameId());
+        String jsonPayload = createProvider1Payload(signature, request.getToken(), request.getGameid());
         return callProvider(request, jsonPayload);
 
     }
 
     private String callProvider2(GameLaunchRequest request) {
         // Prepare the JSON payload
-        String jsonPayload = createProvider2Payload(request.getToken(), request.getGameId());
+        String jsonPayload = createProvider2Payload(request.getToken(), request.getGameid());
         return callProvider(request, jsonPayload);
     }
 

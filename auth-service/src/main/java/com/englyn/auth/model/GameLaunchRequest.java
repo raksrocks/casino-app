@@ -8,7 +8,7 @@ import lombok.Setter;
 public class GameLaunchRequest {
 
     private String token;
-    private String gameId;
+    private String gameid;
 
     // Getters and setters
 }

@@ -7,8 +7,11 @@ spring:
     username: dbtestuser
     password: dbtestpassword
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
     hibernate:
       ddl-auto: update
+      show-sql: true
 
 provider1:
   url: http://ec2-18-130-236-146.eu-west-2.compute.amazonaws.com:8081/provider1/gamelaunch
